@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title>Drums</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+<div class="drums">
+	
+	<div class="item" data-key="65">
+	<kbd>A</kbd>
+	<span class="label">CLAP</span>
+	</div>
+
+	<div class="item" data-key="83">
+	<kbd>S</kbd>
+	<span class="label">HITHAT</span>
+	</div>
+
+	<div class="item" data-key="68">
+	<kbd>D</kbd>
+	<span class="label">KICK</span>
+	</div>
+
+	<div class="item" data-key="70">
+	<kbd>F</kbd>
+	<span class="label">OPENHAT</span>
+	</div>
+
+	<div class="item" data-key="71">
+	<kbd>G</kbd>
+	<span class="label">BOOM</span>
+	</div>
+
+	<div class="item" data-key="72">
+	<kbd>H</kbd>
+	<span class="label">RIDE</span>
+	</div>
+
+	<div class="item" data-key="74">
+	<kbd>J</kbd>
+	<span class="label">SNARE</span>
+	</div>
+
+	<div class="item" data-key="75">
+	<kbd>K</kbd>
+	<span class="label">TOM</span>
+	</div>
+
+	<div class="item" data-key="76">
+	<kbd>L</kbd>
+	<span class="label">TINK</span>
+	</div>
+
+</div>
+
+
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+
+<script>
+	window.addEventListener('keydown',function(e){
+		const audio=document.querySelector(`audio[data-key="${e.keyCode}"]`);
+		const item=document.querySelector(`.item[data-key="${e.keyCode}"]`);
+		if(!audio) return; // stop the function from running if invalid keypress
+		item.classList.add('play');
+		audio.currentTime = 0;
+		audio.play();
+
+		const items=document.querySelectorAll('.item');
+		items.forEach(item => item.addEventListener('transitionend',function(e){
+			if(e.propertyName!=='transform') return; // skip if anything other than transform
+			this.classList.remove('play');
+		}))
+	});
+
+	//code for click functionality
+	const items=document.querySelectorAll('.item');
+	function clickTrigger(){
+		let key=(this.dataset.key);
+		const audio=document.querySelector(`audio[data-key="${key}"]`);
+		const item=this;
+		item.classList.add('play');
+		audio.currentTime = 0;
+		audio.play();
+
+	}
+
+	function unclickTrigger(){
+		this.classList.remove('play');
+	}
+	items.forEach(item=>item.addEventListener('mousedown',clickTrigger));
+	items.forEach(item=>item.addEventListener('mouseup',unclickTrigger));
+
+
+</script>
+</body>
+
+</html>

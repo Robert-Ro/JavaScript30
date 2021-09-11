@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title>Clock</title>
+<meta name="author" content="Arjun Khode">
+<style type="text/css">
+	html{
+		padding:0;
+		margin:0;
+		background:#018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
+        background-size: cover;
+        font-size: 10px;
+        text-align: center;
+	}
+
+	body{
+		display: flex;
+		height: 100vh;
+		flex-flow: row nowrap;
+		align-items: center;
+		overflow: hidden;
+	}
+
+	.clock{
+		position: relative;
+		border-radius: 50%;
+		margin:0 auto;
+		border: 20px solid white;
+		height:30rem;
+		width:30rem;
+		box-shadow: 0 0 0 5px rgba(0,0,0,0.1),
+		0 0 4px black,
+		inset 0 0 8px black,
+		inset 0 0 0 5px rgba(0,0,0,0.3);
+		padding: 2rem;
+	}
+
+	.clock-face{
+		position: relative;
+		width: 100%;
+		height: 100%;
+	}
+
+	.hour-hand{
+		width:33%;
+		height:6px;
+		background-color: white;
+		position: absolute;
+		top:50%;
+		margin-left: 20%;
+		transform-origin: 95%;
+		transform: rotate(90deg);
+		transition: all 0.05s;
+		transition-timing-function: cubic-bezier(0.1,2.7,0.58,1);
+	}
+
+	.minute-hand{
+		width:43%;
+		height:6px;
+		background-color: grey;
+		position: absolute;
+		top:50%;
+		margin-left: 10%;
+		transform-origin: 95%;
+		transform: rotate(90deg);
+		transition: all 0.05s;
+		transition-timing-function: cubic-bezier(0.1,2.7,0.58,1);
+	}
+
+	.second-hand{
+		width:53%;
+		height:6px;
+		background-color: black;
+		position: absolute;
+		top:50%;
+		transform-origin: 95%;
+		transform: rotate(90deg);
+		transition: all 0.05s;
+		transition-timing-function: cubic-bezier(0.1,2.7,0.58,1);
+	}
+
+	.fast
+	{
+		transition: all 0s;
+	}
+
+
+</style>
+</head>
+<body>
+<div class="clock">
+	<div class="clock-face">
+		<div class="second-hand"></div>
+		<div class="minute-hand"></div>
+		<div class="hour-hand"></div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+const secondHand=document.querySelector('.second-hand');
+const minuteHand=document.querySelector('.minute-hand');
+const hourHand=document.querySelector('.hour-hand');
+	function setDate(){
+		const now=new Date();
+		const seconds= now.getSeconds();
+		const minutes=now.getMinutes();
+		const hours=now.getHours();
+		const secondsDegrees = ((seconds/60)*360)+90;
+		const minutesDegrees = ((minutes/60)*360)+90;
+		const hoursDegrees = ((hours/12)*360)+90;
+		secondHand.style.transform=`rotate(${secondsDegrees}deg)`;
+		if(seconds===0) secondHand.classList.add('fast');
+		console.log("added");
+		if(seconds===1) secondHand.classList.remove('fast');
+		console.log("removed");
+
+		minuteHand.style.transform=`rotate(${minutesDegrees}deg)`;
+		if(minutes===0) minuteHand.classList.add('fast');
+		console.log("added");
+		if(minutes===1) minuteHand.classList.remove('fast');
+		console.log("removed");
+
+		hourHand.style.transform=`rotate(${hoursDegrees}deg)`;
+		if(hours===0) hourHand.classList.add('fast');
+		console.log("added");
+		if(hours===1) hourHand.classList.remove('fast');
+		console.log("removed");
+	}
+	setInterval(setDate, 1000);
+</script>
+
+</body>
+</html>
